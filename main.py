@@ -2,7 +2,7 @@ import io
 from fastapi import FastAPI, UploadFile, Form, HTTPException
 from fastapi.responses import StreamingResponse
 from PIL import Image
-import utils
+import cli
 
 app = FastAPI()
 
@@ -16,7 +16,7 @@ async def encode(file: UploadFile, secret_text: str = Form()):
     image = Image.open(io.BytesIO(content)).convert("RGB")
 
     new_image = image.copy()
-    encoded_image = utils.encode(new_image, secret_text)
+    encoded_image = cli.encode(new_image, secret_text)
 
     # return it as file
     output_buffer = io.BytesIO()
@@ -29,5 +29,5 @@ async def encode(file: UploadFile, secret_text: str = Form()):
 async def decode(file: UploadFile):
     content = await file.read()
     image = Image.open(io.BytesIO(content)).convert("RGB")
-    hidden_message = utils.decode(image)
+    hidden_message = cli.decode(image)
     return {"hidden_message": hidden_message}
