@@ -26,5 +26,8 @@ async def encode(file: UploadFile, secret_text: str = Form()):
     return StreamingResponse(output_buffer, media_type="image/png")
 
 @app.post("/api/decode")
-def decode():
-    pass
+async def decode(file: UploadFile):
+    content = await file.read()
+    image = Image.open(io.BytesIO(content)).convert("RGB")
+    hidden_message = utils.decode(image)
+    return {"hidden_message": hidden_message}
