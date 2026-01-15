@@ -37,7 +37,7 @@ def modPix(pix, data):
         yield tuple(pixels[3:6])
         yield tuple(pixels[6:9])
 
-def encode_enc(newimg, data):
+def encode(newimg, data):
     """
     Encodes the modified pixel data into the new image.
     """
@@ -48,6 +48,8 @@ def encode_enc(newimg, data):
         newimg.putpixel((x, y), pixel)
         x = 0 if x == w - 1 else x + 1
         y += 1 if x == 0 else 0
+
+    return newimg
 
 def decode(image):
     """
@@ -76,7 +78,7 @@ def main():
             raise ValueError("Data is empty")
 
         newimg = image.copy()
-        encode_enc(newimg, data)
+        encode(newimg, data)
 
         new_img_name = input("Enter the name of new image (with extension): ")
         newimg.save(new_img_name, new_img_name.split(".")[-1].upper())
