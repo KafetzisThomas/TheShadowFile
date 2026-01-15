@@ -1,6 +1,22 @@
 # source: https://www.geeksforgeeks.org/python/image-based-steganography-using-python/
 
+import os
+import sys
 from PIL import Image
+import colorama
+from colorama import Fore, Style
+
+colorama.init(autoreset=True)
+
+banner = rf"""{Fore.LIGHTGREEN_EX}{Style.BRIGHT}
+  ________        _____ __              __              _______ __   
+ /_  __/ /_  ___ / ___// /_  ____ _____/ /___ _      __/ ____(_) /__ 
+  / / / __ \/ _ \\__ \/ __ \/ __ `/ __  / __ \ | /| / / /_  / / / _ \
+ / / / / / /  __/__/ / / / / /_/ / /_/ / /_/ / |/ |/ / __/ / / /  __/
+/_/ /_/ /_/\___/____/_/ /_/\__,_/\__,_/\____/|__/|__/_/   /_/_/\___/ 
+
+By KafetzisThomas
+"""
 
 def genData(data):
     """
@@ -69,26 +85,48 @@ def decode(image):
     return data
 
 def main():
-    choice = input(":: Welcome to Steganography ::\n1. Encode\n2. Decode\n")
+    print(banner)
+    print(f"{Fore.LIGHTCYAN_EX}[1] Embed Secret{Fore.RESET}   - Hide a text message inside an image")
+    print(f"{Fore.LIGHTCYAN_EX}[2] Extract Secret{Fore.RESET} - Reveal a hidden message from an image")
+    
+    try:
+        choice = input(f"\n{Fore.LIGHTYELLOW_EX}root@theshadowfile:~# {Fore.RESET}")
+    except KeyboardInterrupt:
+        print(f"\n{Fore.LIGHTCYAN_EX}[!] Exiting...")
+        sys.exit()
+
     if choice == '1':
-        img = input("Enter image name (with extension): ")
-        image = Image.open(img, 'r')
-        data = input("Enter data to be encoded: ")     
-        if not data:
-            raise ValueError("Data is empty")
+        img = input("Enter image filename (e.g. jack_russell.jpg): ")
+        try:
+            image = Image.open(img, 'r')
+            data = input("Enter secret message: ")
+            if not data:
+                raise ValueError("Secret message cannot be empty.")
 
-        newimg = image.copy()
-        encode(newimg, data)
+            newimg = image.copy()
+            encoded_image = encode(newimg, data)
 
-        new_img_name = input("Enter the name of new image (with extension): ")
-        newimg.save(new_img_name, new_img_name.split(".")[-1].upper())
+            filename = input("Enter output filename (e.g. hidden.png): ")
+            save_path = os.path.join("output", filename)
+            encoded_image.save(save_path)
+
+            print(f"{Fore.LIGHTGREEN_EX}[+] Secret hidden in output/{filename} successfully!{Fore.RESET}")
+        except Exception as e:
+            print(f"{Fore.LIGHTRED_EX}[!] Error: {e}{Fore.RESET}")
 
     elif choice == '2':
-        img = input("Enter image name (with extension): ")
-        image = Image.open(img, 'r')
-        print("Decoded Word: " + decode(image))
+        img = input("Enter image filename (e.g. output/hidden.png): ")
+        try:
+            image = Image.open(img, 'r')
+            hidden_text = decode(image)
+            print("\n" + Fore.GREEN + "-" * 40)
+            print(f"[+] HIDDEN MESSAGE: {Fore.LIGHTRED_EX}{hidden_text}")
+            print(Fore.GREEN + "-" * 40)
+        except Exception as e:
+            print(f"{Fore.LIGHTRED_EX}[!] Error: {e}{Fore.RESET}")
+
     else:
-        print("Invalid choice, exiting.")
+        print(f"{Fore.LIGHTRED_EX}[!] Invalid selection. Exiting...")
 
 if __name__ == "__main__":
     main()
