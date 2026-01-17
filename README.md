@@ -26,6 +26,12 @@ Access web app at `http://127.0.0.1:8000` or `http://localhost:8000`.
 uv run cli.py
 ```
 
+## Demo Images
+
+![Encode Form](/assets/encode_form.png)
+
+![Decode Form](/assets/decode_form.png)
+
 ## Disclaimer
 
 **TheShadowFile** is designed for **educational purposes** and authorized testing only.
