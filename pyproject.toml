@@ -1,7 +1,7 @@
 [project]
 name = "theshadowfile"
 version = "0.1.0"
-description = "Add your description here"
+description = "Hide and extract secret text messages within image files."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
