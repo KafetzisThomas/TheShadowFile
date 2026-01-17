@@ -1,7 +1,9 @@
 import io
 import base64
 from fastapi import FastAPI, Request, UploadFile, Form, HTTPException
+from fastapi.responses import JSONResponse
 from fastapi.templating import Jinja2Templates
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from PIL import Image
 import cli
 
@@ -49,4 +51,21 @@ async def decode(request: Request, file: UploadFile):
     hidden_message = cli.decode(image)
     return templates.TemplateResponse(
         request, "decode.html", {"title": "Extract Secret", "hidden_message": hidden_message},
+    )
+
+
+@app.exception_handler(StarletteHTTPException)
+def general_http_exception_handler(request: Request, exception: StarletteHTTPException):
+    message = exception.detail if exception.detail else "An error occurred. Please check your request and try again."
+    if request.url.path.startswith("/api"):
+        return JSONResponse(
+            status_code=exception.status_code,
+            content={"detail": message},
+        )
+
+    return templates.TemplateResponse(
+        request,
+        "error.html",        
+        {"status_code": exception.status_code, "title": exception.status_code, "message": message},
+        status_code=exception.status_code,
     )
