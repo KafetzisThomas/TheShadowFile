@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Encode Message</h2>
+    <form action="{{ url_for("encode") }}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Hide a text message inside an image</label>
+            <input class="form-control" type="file" id="formFile" name="file" required>
+        </div>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" name="secret_text" placeholder="Secret text" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Encode</button>
+    </form>
+
+    {% if encoded_image %}
+        <hr>
+        <div class="alert alert-success">
+            <h3>Result Generated!</h3>
+            <p>Right click image below to save it.</p>
+        </div>
+        <img src="data:image/png;base64,{{ encoded_image }}" class="img-fluid border rounded" alt="Encoded Image"/>
+    {% endif %}
+{% endblock content %}

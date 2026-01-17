@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block content %}
+    <h2>Decode Message</h2>
+    <form action="{{ url_for("decode") }}" method="post" enctype="multipart/form-data">
+        <div class="mb-3">
+            <label for="formFile" class="form-label">Reveal a hidden message from an image</label>
+            <input class="form-control" type="file" id="formFile" name="file" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Decode</button>
+    </form>
+
+    {% if hidden_message %}
+        <hr>
+        <div class="card">
+            <div class="card-header bg-success text-white">Hidden Message Found</div>
+            <div class="card-body">
+                <h4 class="card-text">{{ hidden_message }}</h4>
+            </div>
+        </div>
+    {% endif %}
+{% endblock content %}

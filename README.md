@@ -18,7 +18,7 @@ pip install uv
 uv run fastapi dev main.py
 ```
 
-The API will be available at `http://127.0.0.1:8000/api/encode` and `http://127.0.0.1:8000/api/decode` correspondingly.
+Access web app at `http://127.0.0.1:8000` or `http://localhost:8000`.
 
 ### Option B: CLI
 
