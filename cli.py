@@ -102,9 +102,9 @@ def main():
         sys.exit()
 
     if choice == '1':
-        img = input("Enter image filename (e.g. jack_russell.jpg): ")
+        img = input("Enter image filename (e.g. ENTER: jack_russell.jpg): ")
         try:
-            image = Image.open(img, 'r')
+            image = Image.open(img or "jack_russell.jpg", 'r')
             data = input("Enter secret message: ")
             if not data:
                 raise ValueError("Secret message cannot be empty.")
@@ -112,8 +112,8 @@ def main():
             newimg = image.copy()
             encoded_image = encode(newimg, data)
 
-            filename = input("Enter output filename (e.g. hidden.png): ")
-            save_path = os.path.join("output", filename)
+            filename = input("Enter output filename (e.g. ENTER: hidden.png): ")
+            save_path = os.path.join("output", filename or "hidden.png")
             encoded_image.save(save_path)
 
             print(f"{Fore.LIGHTGREEN_EX}[+] Secret hidden in output/{filename} successfully!{Fore.RESET}")
@@ -121,9 +121,9 @@ def main():
             print(f"{Fore.LIGHTRED_EX}[!] Error: {e}{Fore.RESET}")
 
     elif choice == '2':
-        img = input("Enter image filename (e.g. output/hidden.png): ")
+        img = input("Enter image filename (e.g. ENTER: output/hidden.png): ")
         try:
-            image = Image.open(img, 'r')
+            image = Image.open(img or "output/hidden.png", 'r')
             hidden_text = decode(image)
             print("\n" + Fore.GREEN + "-" * 40)
             print(f"[+] HIDDEN MESSAGE: {Fore.LIGHTRED_EX}{hidden_text}")
