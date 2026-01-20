@@ -125,9 +125,9 @@ def main():
         try:
             image = Image.open(img or "output/hidden.png", 'r')
             hidden_text = decode(image)
-            print("\n" + Fore.GREEN + "-" * 40)
+            print("\n" + Fore.GREEN + "--------------------" + "-" * len(hidden_text))
             print(f"[+] HIDDEN MESSAGE: {Fore.LIGHTRED_EX}{hidden_text}")
-            print(Fore.GREEN + "-" * 40)
+            print(Fore.GREEN + "--------------------" + "-" * len(hidden_text))
         except Exception as e:
             print(f"{Fore.LIGHTRED_EX}[!] Error: {e}{Fore.RESET}")
 
