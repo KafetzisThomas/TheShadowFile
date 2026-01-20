@@ -32,6 +32,8 @@ uv run cli.py
 
 ![Decode Form](/assets/decode_form.png)
 
+![Encode & Decode in CLI](/assets/cli_encode_decode.png)
+
 ## Disclaimer
 
 **TheShadowFile** is designed for **educational purposes** and authorized testing only.
