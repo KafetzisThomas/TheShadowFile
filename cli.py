@@ -1,5 +1,10 @@
 # source: https://www.geeksforgeeks.org/python/image-based-steganography-using-python/
 
+import warnings
+
+# silence this specific pillow deprecation warning for now
+warnings.filterwarnings("ignore", category=DeprecationWarning, message=".*getdata.*")
+
 import os
 import sys
 from PIL import Image
@@ -60,6 +65,7 @@ def encode(newimg, data):
     w = newimg.size[0]
     (x, y) = (0, 0)
     
+    # TODO: replace Image.Image.getdata() with get_flattened_data()
     for pixel in modPix(newimg.getdata(), data):
         newimg.putpixel((x, y), pixel)
         x = 0 if x == w - 1 else x + 1
